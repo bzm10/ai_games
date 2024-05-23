@@ -16,7 +16,7 @@ The Connect Four with AI game in this package is adapted from a tutorial on YouT
 
 
 ```python
-from connect4_ai import Connect4Game, Config
+from ai_games import Connect4Game, Config
 
 # Custom configuration
 config = Config(row_count=6, column_count=7)
