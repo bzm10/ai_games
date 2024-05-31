@@ -1,6 +1,10 @@
 import tkinter as tk
 import random
 
+# Initialize scores
+player_score = 0
+ai_score = 0
+
 # AI choice function
 def get_ai_choice():
     choices = ["rock", "paper", "scissors"]
@@ -13,8 +17,12 @@ def determine_winner(player, ai):
     elif (player == "rock" and ai == "scissors") or \
          (player == "scissors" and ai == "paper") or \
          (player == "paper" and ai == "rock"):
+        global player_score
+        player_score += 1
         return "You win!"
     else:
+        global ai_score
+        ai_score += 1
         return "AI wins!"
 
 # Update result label function
@@ -24,6 +32,8 @@ def update_result(player_choice):
     ai_choice_label.config(image=images[ai_choice])
     result = determine_winner(player_choice, ai_choice)
     result_label.config(text=result)
+    player_score_label.config(text=f"Player Score: {player_score}")
+    ai_score_label.config(text=f"AI Score: {ai_score}")
 
 # Main window setup
 root = tk.Tk()
@@ -34,15 +44,14 @@ images = {
     "rock": tk.PhotoImage(file="rock.png").subsample(1),
     "paper": tk.PhotoImage(file="paper.png").subsample(1),
     "scissors": tk.PhotoImage(file="scissors.png").subsample(1),
-    # Icon from icons8.com
     "human": tk.PhotoImage(file="human.png").subsample(1),
+    # Icon from icons8.com
     "ai": tk.PhotoImage(file="ai.png").subsample(1)
 }
 
 # Result label
 result_label = tk.Label(root, text="Choose Move:", font=("Helvetica", 25), pady=20)
 result_label.pack()
-
 
 # Frame for displaying choices
 choices_frame = tk.Frame(root)
@@ -55,6 +64,18 @@ player_choice_label.pack(side=tk.RIGHT, padx=20)
 # AI choice label
 ai_choice_label = tk.Label(choices_frame, image=images["ai"], font=("Helvetica", 14))
 ai_choice_label.pack(side=tk.LEFT, padx=20)
+
+# Frame for score labels
+score_frame = tk.Frame(root)
+score_frame.pack(pady=10)
+
+# Player score label
+player_score_label = tk.Label(score_frame, text=f"Player Score: {player_score}", font=("Helvetica", 14))
+player_score_label.pack(side=tk.RIGHT, padx=65)
+
+# AI score label
+ai_score_label = tk.Label(score_frame, text=f"AI Score: {ai_score}", font=("Helvetica", 14))
+ai_score_label.pack(side=tk.LEFT, padx=65)
 
 # Buttons with text
 buttons_frame = tk.Frame(root)
